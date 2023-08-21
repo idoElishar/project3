@@ -53,6 +53,20 @@ const updateProduce = async (req, res) => {
     }
 };
 
+
+
+
+const changeUserBy1 = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedUser = await userService.changeUserBy1(id);
+        res.status(201).json(updatedUser);
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ error: "Server error Produce not created" });
+    }
+};
+
 const deleteProduct = async (req, res) => {
     try {
         const newUser = parseInt(req.params.id);
@@ -69,7 +83,9 @@ const userControler = {
     getUserById,
     createProduce,
     deleteProduct,
-    updateProduce
+    updateProduce,
+    changeUserBy1
+
 };
 
 export default userControler;

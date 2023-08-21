@@ -28,18 +28,22 @@ const updateUser = async (productForUpdate) => {
 
 
 
-// const changeUserBy1 = async (id) => {
-//     try {
-//         const readFileAsinc = promisify(fs.readFile)
-//         const dataAsinc = await readFileAsinc('./data.json', 'utf8');
-//         const jsonData = JSON.parse(dataAsinc);
-//         const user = jsonData.find(user => id === String(user.id));
-//         return user;
-//     } catch (err) {
-//         console.error('Error reading data:', err);
-//         res.send('Error reading data');
-//     }
-// };
+const changeUserBy1 = async (id) => {
+    try {
+        const dataAsinc = await fss.readFile('./data.json', 'utf8');
+        const jsonData = JSON.parse(dataAsinc);
+        const userIndex = jsonData.findIndex(user => id === String(user.id));
+        if (userIndex === -1) {
+            throw new Error('User not found');
+        }
+        jsonData[userIndex].quantity -= 1;
+        await fss.writeFile('./data.json', JSON.stringify(jsonData), 'utf8');
+        return jsonData[userIndex];
+    } catch (error) {
+        console.error('Error updating user:', error);
+        throw error;
+    }
+};
 
 
 const getUsers = async (req, res) => {
@@ -47,7 +51,7 @@ const getUsers = async (req, res) => {
         const readFileAsinc = promisify(fs.readFile)
         const dataAsinc = await readFileAsinc('./data.json', 'utf8');
         const jsonData = JSON.parse(dataAsinc);
-        
+
         return jsonData;
     } catch (err) {
         console.error('Error reading data:', err);
@@ -90,7 +94,8 @@ const userDal = {
     getUserById,
     createUser,
     deleteUser,
-    updateUser
+    updateUser,
+    changeUserBy1
 };
 export default userDal;
 

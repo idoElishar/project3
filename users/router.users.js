@@ -14,6 +14,7 @@ router.post("/", userControler.createProduce);
 router.delete("/:id", userControler.deleteProduct);
 
 router.put("/:id", userControler.updateProduce);
+router.patch("/:id", userControler.changeUserBy1)
 
 
 // POST localhost:8020/api/users/

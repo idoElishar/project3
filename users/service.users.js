@@ -47,12 +47,25 @@ const updateUser = async (updatedUser) => {
 };
 
 
+
+const changeUserBy1 = async (id) => {
+    try {
+        const user = await userDal.changeUserBy1(id);
+        return user;
+    } catch (err) {
+        console.error('Error reading data:', err);
+        throw err;
+    }
+};
+
+
 const userService = {
     getUsers,
     getUserById,
     createUser,
     deleteUser,
-    updateUser
+    updateUser,
+    changeUserBy1
 };
 
 export default userService;
