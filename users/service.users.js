@@ -36,9 +36,9 @@ const deleteUser = async (id) => {
 };
 
 
-const updateUser = async (id) => {
+const updateUser = async (updatedUser) => {
     try {
-        const user = await userDal.updateUser(id);
+        const user = await userDal.updateUser(updatedUser);
         return user;
     } catch (err) {
         console.error('Error reading data:', err);

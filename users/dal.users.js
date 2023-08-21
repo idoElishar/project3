@@ -13,30 +13,41 @@ const writeUsersToFile = async (users) => {
     await fss.writeFile(USERS_FILE_PATH, updatedDataJSON, "utf8");
 };
 
-const updateUser= async (id, updatedProduct) => {
-    const index = products.findIndex(product => product.id === id);
-    if (index !== -1) {
-        products[index] = { ...products[index], ...updatedProduct };
-        return products[index];
+const updateUser = async (productForUpdate) => {
+    const readFileAsinc = promisify(fs.readFile)
+    const dataAsinc = await readFileAsinc('./data.json', 'utf8');
+    const jsonData = JSON.parse(dataAsinc);
+    let productIndex = jsonData.findIndex((product) => product.id === productForUpdate.id)
+    if (productIndex === -1) {
+        return false
     }
-    return null;
+    jsonData[productIndex] = productForUpdate;
+    await writeUsersToFile(jsonData);
+    return productForUpdate
 }
 
-  
-  
-  
-  
-  
-  
+
+
+// const changeUserBy1 = async (id) => {
+//     try {
+//         const readFileAsinc = promisify(fs.readFile)
+//         const dataAsinc = await readFileAsinc('./data.json', 'utf8');
+//         const jsonData = JSON.parse(dataAsinc);
+//         const user = jsonData.find(user => id === String(user.id));
+//         return user;
+//     } catch (err) {
+//         console.error('Error reading data:', err);
+//         res.send('Error reading data');
+//     }
+// };
+
 
 const getUsers = async (req, res) => {
     try {
         const readFileAsinc = promisify(fs.readFile)
         const dataAsinc = await readFileAsinc('./data.json', 'utf8');
         const jsonData = JSON.parse(dataAsinc);
-        // const userStrings = jsonData.map(user => `id: ${user.id}, price: ${user.price}, title: "${user.title}", description: "${user.description}", category: "${user.category}", image: "${user.image}", quantity: ${user.quantity}, rating: ${user.rating.rate}, rating count: ${user.rating.count}\n`);
-        // const responseString = userStrings.join('');
-        // const userJSON = JSON.stringify(responseString);
+        
         return jsonData;
     } catch (err) {
         console.error('Error reading data:', err);
@@ -73,9 +84,6 @@ const createUser = async (user) => {
     await writeUsersToFile(users);
     return user;
 };
-
-
-
 
 const userDal = {
     getUsers,

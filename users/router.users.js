@@ -13,7 +13,7 @@ router.post("/", userControler.createProduce);
 
 router.delete("/:id", userControler.deleteProduct);
 
-router.put("/", userControler.updateProduce);
+router.put("/:id", userControler.updateProduce);
 
 
 // POST localhost:8020/api/users/

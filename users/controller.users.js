@@ -40,23 +40,18 @@ const createProduce = async (req, res) => {
     }
 };
 
-
-
 const updateProduce = async (req, res) => {
     try {
         const newUser = req.body;
-        const updatedUser = await userService.createUser(newUser);
+        newUser.id = Number(
+            params.id)
+        const updatedUser = await userService.updateUser(newUser);
         res.status(201).json(updatedUser);
     } catch (error) {
         console.error("Error:", error);
         res.status(500).json({ error: "Server error Produce not created" });
     }
 };
-
-
-
-
-
 
 const deleteProduct = async (req, res) => {
     try {
@@ -68,7 +63,6 @@ const deleteProduct = async (req, res) => {
         res.status(500).json({ error: "Server error Produce not created" });
     }
 };
-
 
 const userControler = {
     getAllUsers,

@@ -11,9 +11,5 @@ app.use('/', usersRouter)
 app.listen(port, () => {
     console.log(`Server is up and running on port: ${port}`);
 });
-git init
-git add .
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/idoElishar/project3.git
-git push -u origin main
+
+
