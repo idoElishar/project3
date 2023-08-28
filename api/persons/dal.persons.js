@@ -24,8 +24,7 @@ const createUser = async (user) => {
         return user;
     }
     // else {
-    //     console.error('Error mail is exist:', err);
-    //     res.send('Error mail exists');
+    //     res.json({ "error": 'Error mail exists' });
     // }
 };
 
@@ -49,10 +48,10 @@ const getUserByData = async (data) => {
         const readFileAsync = promisify(fs.readFile);
         const dataAsync = await readFileAsync('./dataPerson.json', 'utf8');
         const jsonData = JSON.parse(dataAsync);
-         
-        const user = jsonData.find(person => 
-            data.email === String(person.email) && 
-            data.id === Number(person.id) && 
+
+        const user = jsonData.find(person =>
+            data.email === String(person.email) &&
+            data.id === Number(person.id) &&
             data.password === String(person.password)
         );
         console.log("dasda")
